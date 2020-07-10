@@ -1,0 +1,4 @@
+time_step=0.5
+page_num=1
+file_suffix='jpg'
+start_num=0
