@@ -79,7 +79,7 @@ class Crawler:
                 r = requests.get(url, headers)
                 r.coding = 'utf-8'
                 url_list = re.findall('"objURL":"(.*?)",', r.text, re.S)
-                self.signal_page.emit({'code': 1, 'val': i + self._start_page})
+                self.signal_page.emit({'code': 1, 'val': i + 1})
                 self.download_img(url_list, i + self._start_page, self._page_num + self._start_page - 1)
         elif pattern == 2:
             r = requests.get(_url, headers)

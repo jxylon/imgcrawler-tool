@@ -80,7 +80,7 @@ class Ui_MainWindow(QWidget):
         self.progressBar.setObjectName("progressBar")
         self.progressBar.setVisible(False)
         self.progressBar_2 = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar_2.setMaximum(self.crawler._page_num + self.crawler._start_page - 1)
+        self.progressBar_2.setMaximum(self.crawler._page_num)
         self.progressBar_2.setProperty("value", 0)
         self.progressBar_2.setObjectName("progressBar_2")
         self.progressBar_2.setVisible(False)
@@ -236,7 +236,7 @@ class Ui_MainWindow(QWidget):
             self.action_pattern1.setCheckable(True)
             self.action_pattern1.setChecked(True)
             self.action_pattern2.setChecked(False)
-            self.progressBar_2.setMaximum(self.crawler._page_num + self.crawler._start_page - 1)
+            self.progressBar_2.setMaximum(self.crawler._page_num)
         elif idx == 2:
             self.pattern = 2
             self.action_pattern1.setChecked(False)
@@ -259,7 +259,7 @@ class Ui_MainWindow(QWidget):
         self.crawler.flag = True
         # 用到了时间间隔、爬取页数，所以需要重新加载
         self.crawler.load_parameter()
-        self.progressBar_2.setMaximum(self.crawler._page_num + self.crawler._start_page - 1)
+        self.progressBar_2.setMaximum(self.crawler._page_num)
         self.thread_crawler = Worker_crawler(self.pattern, self.crawler, keyword, website)
         self.thread_crawler.progressBarValue.connect(self.on_imgchange)
         self.thread_crawler.progressBarValue2.connect(self.on_pagechange)
