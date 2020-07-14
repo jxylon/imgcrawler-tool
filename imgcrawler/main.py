@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-import crawler_ui, settings_ui
+import crawler_ui
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

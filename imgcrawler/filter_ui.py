@@ -177,9 +177,10 @@ class Ui_MainWindow(QMainWindow):
         idx = self.listview_file.currentIndex().row()
         img_path = os.path.join(self.cur_path, self.imglist[idx])
         ans = QMessageBox.question(self, "确认", "确认删除？", QMessageBox.Yes | QMessageBox.No)
-        if ans:
+        if ans == QMessageBox.Yes:
             self.listview_file.takeItem(idx)
             self.imglist.pop(idx)
+            self.on_clickitem(0)
             try:
                 shutil.move(img_path, os.path.join(self.root_path, 'recyclebin'))
             except shutil.Error:
