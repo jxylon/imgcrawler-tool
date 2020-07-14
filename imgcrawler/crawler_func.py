@@ -16,7 +16,8 @@ class Crawler:
     def __init__(self, save_path='./', file_suffix='jpg'):
         self._time_step = 0.1  # 每张图片的下载间隔
         self._save_path = save_path  # 图片保存路径
-        self._file_suffix = file_suffix  # 图片保存后缀名
+        self._file_suffix = file_suffix  # 图片重命名后的后缀名
+        self._start_page = 1  # 图片爬取起始页数
         self._start_num = 0  # 重命名起始数字
         self._page_num = 1  # 下载页数
         self.flag = True
@@ -40,7 +41,7 @@ class Crawler:
         page_num: 待下载图片的总页数
         """
 
-        print('第{}/{}页正在下载中...'.format(page_idx + 1, page_num))
+        print('第{}/{}页正在下载中...'.format(page_idx, page_num))
         n = len(url_list)
         for i in tqdm(range(n)):
             if not self.flag:
@@ -60,7 +61,7 @@ class Crawler:
                 # print('下载图片失败！')
                 continue
 
-    def start_craw(self, pattern, keyword=None, _url=baidu_url, start_page=1):
+    def start_craw(self, pattern, keyword=None, _url=baidu_url):
         """
         爬虫主函数
         pattern: 模式1-下载百度图片，模式2-下载任意网页中的所有图片
@@ -73,13 +74,13 @@ class Crawler:
             for i in range(self._page_num):
                 if not self.flag:
                     break
-                pn = (start_page - 1) * 60 + i * 60
+                pn = (self._start_page - 1) * 60 + i * 60
                 url = _url + keyword + '&pn=' + str(pn)
                 r = requests.get(url, headers)
                 r.coding = 'utf-8'
                 url_list = re.findall('"objURL":"(.*?)",', r.text, re.S)
-                self.signal_page.emit({'code': 1, 'val': i + 1})
-                self.download_img(url_list, i, self._page_num)
+                self.signal_page.emit({'code': 1, 'val': i + self._start_page})
+                self.download_img(url_list, i + self._start_page, self._page_num + self._start_page - 1)
         elif pattern == 2:
             r = requests.get(_url, headers)
             soup = BeautifulSoup(r.content, 'lxml')

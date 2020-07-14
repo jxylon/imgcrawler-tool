@@ -80,7 +80,7 @@ class Ui_MainWindow(QWidget):
         self.progressBar.setObjectName("progressBar")
         self.progressBar.setVisible(False)
         self.progressBar_2 = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar_2.setMaximum(self.crawler._page_num)
+        self.progressBar_2.setMaximum(self.crawler._page_num + self.crawler._start_page - 1)
         self.progressBar_2.setProperty("value", 0)
         self.progressBar_2.setObjectName("progressBar_2")
         self.progressBar_2.setVisible(False)
@@ -130,7 +130,7 @@ class Ui_MainWindow(QWidget):
         self.action_filter = QtWidgets.QAction(MainWindow)
         self.action_filter.setObjectName("action_filter")
         self.action_filter.setShortcut('Ctrl+F')
-        self.action_filter.triggered.connect(self.filter_ui.showMaximized)
+        self.action_filter.triggered.connect(self.on_filter)
         self.action_arrange = QtWidgets.QAction(MainWindow)
         self.action_arrange.setObjectName("action_arrange")
         self.action_arrange.setShortcut('Ctrl+Shift+A')
@@ -236,7 +236,7 @@ class Ui_MainWindow(QWidget):
             self.action_pattern1.setCheckable(True)
             self.action_pattern1.setChecked(True)
             self.action_pattern2.setChecked(False)
-            self.progressBar_2.setMaximum(self.crawler._page_num)
+            self.progressBar_2.setMaximum(self.crawler._page_num + self.crawler._start_page - 1)
         elif idx == 2:
             self.pattern = 2
             self.action_pattern1.setChecked(False)
@@ -259,6 +259,7 @@ class Ui_MainWindow(QWidget):
         self.crawler.flag = True
         # 用到了时间间隔、爬取页数，所以需要重新加载
         self.crawler.load_parameter()
+        self.progressBar_2.setMaximum(self.crawler._page_num + self.crawler._start_page - 1)
         self.thread_crawler = Worker_crawler(self.pattern, self.crawler, keyword, website)
         self.thread_crawler.progressBarValue.connect(self.on_imgchange)
         self.thread_crawler.progressBarValue2.connect(self.on_pagechange)
@@ -296,6 +297,12 @@ class Ui_MainWindow(QWidget):
     def on_setting(self):
         self.setting_ui.load_parameter()
         self.setting_ui.show()
+
+    def on_filter(self):
+        self.filter_ui.showMaximized()
+        width = self.filter_ui.width()
+        height = self.filter_ui.height()
+        self.filter_ui.setFixedSize(width, height)
 
 
 class Worker_crawler(QThread):

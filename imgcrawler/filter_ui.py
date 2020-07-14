@@ -45,19 +45,22 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_prev = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_prev.setObjectName("pushButton_prev")
         self.pushButton_prev.clicked.connect(lambda: self.on_clickitem(-1))
+        self.pushButton_prev.setShortcut('A')
         self.pushButton_prev.setFont(font)
         self.pushButton_prev.setIcon(QIcon(QPixmap(self.root_path + '/resources/icons/prev.png')))
         self.horizontalLayout.addWidget(self.pushButton_prev)
         self.pushButton_del = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_del.setObjectName("pushButton_del")
         self.pushButton_del.setStyleSheet("background-color:red;color:white")
-        self.pushButton_del.clicked.connect(self.ont_filter)
+        self.pushButton_del.clicked.connect(self.on_filter)
+        self.pushButton_del.setShortcut('S')
         self.pushButton_del.setFont(font)
         self.pushButton_del.setIcon(QIcon(QPixmap(self.root_path + '/resources/icons/cancel.png')))
         self.horizontalLayout.addWidget(self.pushButton_del)
         self.pushButton_next = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_next.setObjectName("pushButton_next")
         self.pushButton_next.clicked.connect(lambda: self.on_clickitem(1))
+        self.pushButton_next.setShortcut('D')
         self.pushButton_next.setFont(font)
         self.pushButton_next.setIcon(QIcon(QPixmap(self.root_path + '/resources/icons/next.png')))
         self.horizontalLayout.addWidget(self.pushButton_next)
@@ -97,12 +100,20 @@ class Ui_MainWindow(QMainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "人工审核 "))
         self.label_img.setText(_translate("MainWindow", ""))
         self.pushButton_prev.setText(_translate("MainWindow", "上一张"))
+        self.pushButton_prev.setShortcut(_translate("MainWindow", "A"))
         self.pushButton_del.setText(_translate("MainWindow", "删除"))
+        self.pushButton_del.setShortcut(_translate("MainWindow", "S"))
         self.pushButton_next.setText(_translate("MainWindow", "下一张"))
+        self.pushButton_next.setShortcut(_translate("MainWindow", "D"))
         self.menu.setTitle(_translate("MainWindow", "功能"))
         self.action_openfile.setText(_translate("MainWindow", "打开文件夹"))
 
     # 功能函数
+    def remove_items(self):
+        print(self.listview_file.size())
+        for i in range(self.listview_file.size()):
+            self.listview_file.takeItem(i)
+
     def open_file(self):
         """
         更改存储路径
@@ -110,6 +121,7 @@ class Ui_MainWindow(QMainWindow):
         """
         filename = QFileDialog.getExistingDirectory(caption='更改存储路径', directory=self.cur_path)
         self.isopen = False
+        self.listview_file.clear()
         if filename:
             self.cur_path = filename + '/'
             self.isopen = True
@@ -161,14 +173,16 @@ class Ui_MainWindow(QMainWindow):
                 c = -1
             return int(c)
 
-    def ont_filter(self):
+    def on_filter(self):
         idx = self.listview_file.currentIndex().row()
         img_path = os.path.join(self.cur_path, self.imglist[idx])
         ans = QMessageBox.question(self, "确认", "确认删除？", QMessageBox.Yes | QMessageBox.No)
         if ans:
+            self.listview_file.takeItem(idx)
+            self.imglist.pop(idx)
             try:
                 shutil.move(img_path, os.path.join(self.root_path, 'recyclebin'))
             except shutil.Error:
                 os.remove(img_path)
         # 删除完重新加载该目录中的文件，文件太多可能会造成卡顿
-        self.load_file()
+        # self.load_file()
