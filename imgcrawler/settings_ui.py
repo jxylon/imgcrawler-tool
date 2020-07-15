@@ -9,16 +9,36 @@
 import os
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_MainWindow(QMainWindow):
+    # 信号，pyqt5信号要定义为类属性，而不是放在 _init_这个方法里面
+    signal = pyqtSignal(dict)
+
     def __init__(self):
+        """
+        添加参数时，添加至para_dict，若类型为数字则加入digital_para
+
+        """
         super().__init__()
+        # 根目录
         self.root_path = os.path.abspath('./')
-        self.para_list = ['time_step', 'start_page', 'page_num', 'file_suffix', 'start_num']
+        # 参数列表
+        self.para_dict = {'time_step': '0.1', 'start_page': '1', 'page_num': '1', 'file_suffix': 'all',
+                          'start_num': '0'}
+        self.digital_para = ['time_step', 'start_page', 'page_num', 'start_num']
+        # 指定的图片后缀
+        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG']
+        # 信号连接信号槽
+        self.signal.connect(self.signal_call)
 
     def load_parameter(self):
+        """
+        读取settings.txt,为lineEdit设置值
+
+        """
         with open(os.path.join(self.root_path, "settings.txt"), "r") as f:  # 打开文件
             lines = f.readlines()  # 按行读取文件
             for line in lines:  # 遍历每一行
@@ -28,6 +48,10 @@ class Ui_MainWindow(QMainWindow):
                 t.setText(val.strip().strip('\''))
 
     def setupUi(self, MainWindow):
+        """
+        初始化组件
+
+        """
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 550)
         font = QtGui.QFont()
@@ -158,6 +182,7 @@ class Ui_MainWindow(QMainWindow):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        # 组件初始化完毕后，为各个lineEdit设置值
         self.load_parameter()
 
     def retranslateUi(self, MainWindow):
@@ -171,14 +196,30 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_save.setText(_translate("MainWindow", "保存"))
 
     def on_save(self):
+        """
+        保存按钮函数，将lineEdit的值保存至settings.txt
+
+        """
+        no_wrong = True
         with open(os.path.join(self.root_path, "settings.txt"), "w+") as f:  # 打开文件
-            for para in self.para_list:
+            for para in self.para_dict.keys():
                 t = eval('self.lineEdit_' + para)
                 v = t.text()
-                if len(v.strip()) == 0:
-                    v = '\'\''
-                elif v and not v[0].isdigit():
+                # 参数是数字参数且值为空或值不为数字，设置为默认值
+                if para in self.digital_para and (len(v.strip()) == 0 or not v[0].isdigit()):
+                    v = self.para_dict[para]
+                    self.signal.emit({'msg': '参数不符合要求，默认设置为' + v})
+                    no_wrong = 0
+                # 参数是后缀
+                elif para == 'file_suffix':
+                    if v not in self.default_suffix:
+                        v = self.para_dict[para]
+                        self.signal.emit({'msg': '后缀不符合要求，默认设置为' + v})
+                        no_wrong = 0
                     v = '\'' + v + '\''
                 f.write(para + '=' + v + '\n')
-        QtWidgets.QMessageBox.information(self, "提示", "保存成功", QtWidgets.QMessageBox.Yes)
+        if no_wrong:
+            QtWidgets.QMessageBox.information(self, "提示", "保存成功", QtWidgets.QMessageBox.Yes)
 
+    def signal_call(self, obj):
+        QtWidgets.QMessageBox.critical(self, '错误', obj['msg'], QtWidgets.QMessageBox.Yes)

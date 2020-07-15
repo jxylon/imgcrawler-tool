@@ -11,15 +11,25 @@ import settings_ui
 
 
 class Ui_MainWindow(QWidget):
+    # 信号，pyqt5信号要定义为类属性，而不是放在 _init_这个方法里面
+    signal = pyqtSignal(dict)
+
     def __init__(self):
         super().__init__()
+        # 初始化Crawler实例
         self.crawler = crawler_func.Crawler()
+        # 根结点
         self.root_path = os.path.abspath('./') + '/'
+        # 保存目录
         self.save_path = self.root_path
+        # 当前目录
         self.cur_path = self.root_path
+        # 爬虫模式
         self.pattern = 1
+        # 线程
         self.thread_crawler = None
         self.thread_arrange = None
+        # 判断文件是否打开
         self.isopen = False
         # ui函数
         self.filter_ui = filter_ui.Ui_MainWindow()
@@ -27,6 +37,9 @@ class Ui_MainWindow(QWidget):
         self.setting_ui = settings_ui.Ui_MainWindow()
         self.setting_ui.setupUi(self.setting_ui)
         self.lableimg_ui = labelImg.MainWindow(None, '../labelimg/data/predefined_classes.txt', None)
+        # 信号连接信号槽
+        self.signal.connect(self.signal_call)
+        self.crawler.signal_msg = self.signal
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -256,11 +269,14 @@ class Ui_MainWindow(QWidget):
         self.progressBar_2.setVisible(True)
         self.crawler._save_path = self.save_path
         # 停止线程使用
-        self.crawler.flag = True
+        self.crawler.flag = 1
         # 用到了时间间隔、爬取页数，所以需要重新加载
         self.crawler.load_parameter()
+        # 设置最大页数
         self.progressBar_2.setMaximum(self.crawler._page_num)
+        # 初始化爬虫线程实例
         self.thread_crawler = Worker_crawler(self.pattern, self.crawler, keyword, website)
+        # 信号连接信号槽
         self.thread_crawler.progressBarValue.connect(self.on_imgchange)
         self.thread_crawler.progressBarValue2.connect(self.on_pagechange)
         self.thread_crawler.start()
@@ -270,14 +286,16 @@ class Ui_MainWindow(QWidget):
 
     def on_pagechange(self, obj):
         self.progressBar_2.setValue(obj['val'])
-        if obj['code'] == 2:
+        # 爬取成功
+        if obj['code'] == 1:
             QtWidgets.QMessageBox.information(self, "提示", "爬取完毕", QtWidgets.QMessageBox.Yes)
-        elif obj['code'] == 3:
+        # 停止线程完毕
+        elif obj['code'] == 2:
             QtWidgets.QMessageBox.information(self, "提示", "停止线程完毕", QtWidgets.QMessageBox.Yes)
 
     def on_arrangechange(self, obj):
         self.progressBar.setValue(obj['val'])
-        if obj['code'] == 2:
+        if obj['code'] == 1:
             QtWidgets.QMessageBox.information(self, "提示", "图片重命名完毕", QtWidgets.QMessageBox.Yes)
 
     def on_arrange(self):
@@ -292,7 +310,7 @@ class Ui_MainWindow(QWidget):
             self.thread_arrange.start()
 
     def on_stop(self):
-        self.crawler.flag = False
+        self.crawler.flag = 2
 
     def on_setting(self):
         self.setting_ui.load_parameter()
@@ -304,17 +322,20 @@ class Ui_MainWindow(QWidget):
         height = self.filter_ui.height()
         self.filter_ui.setFixedSize(width, height)
 
+    def signal_call(self, obj):
+        QtWidgets.QMessageBox.critical(self, '错误', obj['msg'], QtWidgets.QMessageBox.Yes)
+
 
 class Worker_crawler(QThread):
-    progressBarValue = pyqtSignal(int)  # 更新进度条
-    progressBarValue2 = pyqtSignal(dict)
+    progressBarValue = pyqtSignal(int)  # 百分比进度条
+    progressBarValue2 = pyqtSignal(dict)  # 页数进度条
 
     def __init__(self, pattern, crawler, keyword, website):
         super(Worker_crawler, self).__init__()
-        self.pattern = pattern
-        self.crawler = crawler
-        self.keyword = keyword
-        self.website = website
+        self.pattern = pattern  # 模式
+        self.crawler = crawler  # Crawler实例
+        self.keyword = keyword  # 关键词 - 模式1
+        self.website = website  # 网址 - 模式2
         crawler.signal_img = self.progressBarValue
         crawler.signal_page = self.progressBarValue2
 

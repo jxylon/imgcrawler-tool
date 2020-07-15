@@ -1,5 +1,5 @@
 time_step=0.5
-start_page=2
+start_page=1
 page_num=1
-file_suffix='jpg'
+file_suffix='all'
 start_num=1

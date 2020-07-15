@@ -20,14 +20,19 @@ class Crawler:
         self._start_page = 1  # 图片爬取起始页数
         self._start_num = 0  # 重命名起始数字
         self._page_num = 1  # 下载页数
-        self.flag = True
+        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG']
+        self.flag = 1
         self.root_path = os.path.abspath('./')
         self.signal_page = None
         self.signal_img = None
         self.signal_arrange = None
+        self.signal_msg = None
         self.load_parameter()
 
     def load_parameter(self):
+        """
+        从settings.txt中加载参数，
+        """
         with open(os.path.join(self.root_path, "settings.txt"), "r") as f:  # 打开文件
             lines = f.readlines()  # 按行读取文件
             for line in lines:  # 遍历每一行
@@ -71,27 +76,31 @@ class Crawler:
         page_num: 总页数
         """
         if pattern == 1:
+            if len(keyword.strip()) == 0:
+                self.flag = 3
             for i in range(self._page_num):
-                if not self.flag:
+                if self.flag != 1:
                     break
                 pn = (self._start_page - 1) * 60 + i * 60
                 url = _url + keyword + '&pn=' + str(pn)
                 r = requests.get(url, headers)
                 r.coding = 'utf-8'
                 url_list = re.findall('"objURL":"(.*?)",', r.text, re.S)
-                self.signal_page.emit({'code': 1, 'val': i + 1})
-                self.download_img(url_list, i + self._start_page, self._page_num + self._start_page - 1)
+                self.signal_page.emit({'code': 0, 'val': i + 1})
+                self.download_img(url_list, i + 1, self._page_num)
         elif pattern == 2:
             r = requests.get(_url, headers)
             soup = BeautifulSoup(r.content, 'lxml')
             img_list = soup.find_all('img')
             url_list = [tag.get('src') for tag in img_list]
-            self.signal_page.emit({'code': 1, 'val': 1})
+            self.signal_page.emit({'code': 0, 'val': 1})
             self.download_img(url_list)
-        if self.flag:
+        if self.flag == 1:
+            self.signal_page.emit({'code': 1, 'val': 0})
+        elif self.flag == 2:
             self.signal_page.emit({'code': 2, 'val': 0})
-        else:
-            self.signal_page.emit({'code': 3, 'val': 0})
+        elif self.flag == 3:
+            self.signal_msg.emit({'msg': '模式一：关键词不能为空'})
 
     def arrange_imgname(self, default_path=None):
         """
@@ -112,14 +121,18 @@ class Crawler:
         for i in range(n):
             if not os.path.isdir(selected_path + img_list[i]):
                 suffix = img_list[i].split('.')[1]  # 后缀
-                if suffix in ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif']:
+                if suffix in ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG',
+                              'JPEG']:
                     shutil.move(selected_path + img_list[i], selected_path + 'tmp' + str(k) + '/' + img_list[i])
         img_list2 = os.listdir(selected_path + 'tmp' + str(k))
+        # 按数字排序
+        if self._file_suffix != 'all':
+            img_list2.sort(key=lambda x: int(x.split('.')[0]))
         m = len(img_list2)
         # 重命名图片，并移动到原目录下
         print('正在重命名...')
         for i in tqdm(range(m)):
-            self.signal_arrange.emit({'code': 1, 'val': (i + 1) / m * 100})
+            self.signal_arrange.emit({'code': 0, 'val': (i + 1) / m * 100})
             if self._file_suffix == 'all':  # 重命名不改变后缀
                 suffix = img_list2[i].split('.')[1]  # 原后缀
             else:
@@ -127,8 +140,8 @@ class Crawler:
             shutil.copy2(selected_path + 'tmp' + str(k) + '/' + img_list[i],
                          selected_path + str(start + i) + '.' + suffix)
         shutil.rmtree(selected_path + 'tmp' + str(k))
-        print('图片重命名：{}.jpg - {}.jpg'.format(start, start + m - 1))
-        self.signal_arrange.emit({'code': 2, 'val': 100})
+        print('图片重命名：{} - {}'.format(start, start + m - 1))
+        self.signal_arrange.emit({'code': 1, 'val': 100})
 
 
 if __name__ == '__main__':
