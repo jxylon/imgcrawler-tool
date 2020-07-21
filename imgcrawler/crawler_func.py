@@ -137,7 +137,7 @@ class Crawler:
                 suffix = img_list2[i].split('.')[1]  # 原后缀
             else:
                 suffix = self._file_suffix  # 指定后缀
-            shutil.copy2(selected_path + 'tmp' + str(k) + '/' + img_list[i],
+            shutil.copy2(selected_path + 'tmp' + str(k) + '/' + img_list2[i],
                          selected_path + str(start + i) + '.' + suffix)
         shutil.rmtree(selected_path + 'tmp' + str(k))
         print('图片重命名：{} - {}'.format(start, start + m - 1))
