@@ -34,6 +34,7 @@
   + 该功能为labelimg的代码。
 + 设置：与imgcralwer/settings.txt参数保持一致
   + time_step：爬取间隔
+  + start_page：起始爬取页面（仅模式一可用）
   + page_num：爬取页面数（仅模式一可用）
   + file_suffix：重命名图片后缀
   + start_num：重命名起始数字
