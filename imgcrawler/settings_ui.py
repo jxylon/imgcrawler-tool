@@ -30,7 +30,7 @@ class Ui_MainWindow(QMainWindow):
                           'start_num': '0'}
         self.digital_para = ['time_step', 'start_page', 'page_num', 'start_num']
         # 指定的图片后缀
-        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG']
+        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG', 'all']
         # 信号连接信号槽
         self.signal.connect(self.signal_call)
 
