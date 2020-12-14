@@ -8,10 +8,9 @@
 
   + pip install -r requirements.txt
 
-+ **运行**
++ 运行
 
   + python imagecrawler/main.py
-  
   
 
 #### 2. 功能列表
@@ -78,3 +77,18 @@
   - 优化了”设置“选项。
 - 2020.7.21
   - 修改了重命名后缀不为all时，重命名乱序的问题。
+
+#### 5. 问题
+
++ 如果遇到问题
+
+  ```
+  AssertionError: Missing string id : useDefaultLabel
+  ```
+
+  请进入“x:\xxx\imgcrawler-tool\imgcrawler\labelImg”文件夹，运行命令
+
+  ```
+  pyrcc5 -o resources.py resources.qrc
+  ```
+
