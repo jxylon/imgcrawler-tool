@@ -83,12 +83,12 @@
 + 如果遇到问题
 
   ```
+  	assert(stringId in self.idToMessage), "Missing string id : " + stringId
   AssertionError: Missing string id : useDefaultLabel
   ```
-
+  
   请进入“x:\xxx\imgcrawler-tool\imgcrawler\labelImg”文件夹，运行命令
-
+  
   ```
   pyrcc5 -o resources.py resources.qrc
   ```
-
