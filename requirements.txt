@@ -1,5 +1,5 @@
 lxml==4.9.1
-requests==2.23.0
+requests==2.31.0
 tqdm==4.46.0
 beautifulsoup4==4.9.1
 PyQt5==5.15.0
