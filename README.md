@@ -6,7 +6,7 @@
 
 + 库
 
-  + pip install -r requirements.txt
+  + pip install -r requirement.txt
 
 + 运行
 

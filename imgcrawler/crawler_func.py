@@ -20,7 +20,8 @@ class Crawler:
         self._start_page = 1  # 图片爬取起始页数
         self._start_num = 0  # 重命名起始数字
         self._page_num = 1  # 下载页数
-        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG']
+        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg',
+                               'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG']
         self.flag = 1
         self.root_path = os.path.abspath('./')
         self.signal_page = None
@@ -31,7 +32,7 @@ class Crawler:
 
     def load_parameter(self):
         """
-        从settings.txt中加载参数，
+        从settings.txt中加载参数
         """
         with open(os.path.join(self.root_path, "settings.txt"), "r") as f:  # 打开文件
             lines = f.readlines()  # 按行读取文件
@@ -123,7 +124,8 @@ class Crawler:
                 suffix = img_list[i].split('.')[1]  # 后缀
                 if suffix in ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG',
                               'JPEG']:
-                    shutil.move(selected_path + img_list[i], selected_path + 'tmp' + str(k) + '/' + img_list[i])
+                    shutil.move(
+                        selected_path + img_list[i], selected_path + 'tmp' + str(k) + '/' + img_list[i])
         img_list2 = os.listdir(selected_path + 'tmp' + str(k))
         # 按数字排序
         if self._file_suffix != 'all':
