@@ -28,9 +28,11 @@ class Ui_MainWindow(QMainWindow):
         # 参数列表
         self.para_dict = {'time_step': '0.1', 'start_page': '1', 'page_num': '1', 'file_suffix': 'all',
                           'start_num': '0'}
-        self.digital_para = ['time_step', 'start_page', 'page_num', 'start_num']
+        self.digital_para = ['time_step',
+                             'start_page', 'page_num', 'start_num']
         # 指定的图片后缀
-        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg', 'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG', 'all']
+        self.default_suffix = ['bmp', 'dib', 'png', 'jpg', 'jpeg',
+                               'pbm', 'pgm', 'ppm', 'tif', 'tiff', 'gif', 'JPG', 'all']
         # 信号连接信号槽
         self.signal.connect(self.signal_call)
 
@@ -74,7 +76,8 @@ class Ui_MainWindow(QMainWindow):
         self.label_file_suffix.setObjectName("label_file_suffix")
         self.horizontalLayout_5.addWidget(self.label_file_suffix)
         self.lineEdit_file_suffix = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_file_suffix.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.lineEdit_file_suffix.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.lineEdit_file_suffix.setObjectName("lineEdit_file_suffix")
         self.horizontalLayout_5.addWidget(self.lineEdit_file_suffix)
         self.gridLayout.addLayout(self.horizontalLayout_5, 6, 0, 1, 1)
@@ -85,7 +88,8 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout_3.addWidget(self.label_time_step)
         self.lineEdit_time_step = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_time_step.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.lineEdit_time_step.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.lineEdit_time_step.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.lineEdit_time_step.setObjectName("lineEdit_time_step")
         self.horizontalLayout_3.addWidget(self.lineEdit_time_step)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
@@ -105,7 +109,8 @@ class Ui_MainWindow(QMainWindow):
         self.label_start_num.setObjectName("label_start_num")
         self.horizontalLayout_9.addWidget(self.label_start_num)
         self.lineEdit_start_num = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_start_num.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.lineEdit_start_num.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.lineEdit_start_num.setObjectName("lineEdit_start_num")
         self.horizontalLayout_9.addWidget(self.lineEdit_start_num)
         self.gridLayout.addLayout(self.horizontalLayout_9, 8, 0, 1, 1)
@@ -116,7 +121,8 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout_6.addWidget(self.label_start_page)
         self.lineEdit_start_page = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_start_page.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.lineEdit_start_page.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.lineEdit_start_page.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.lineEdit_start_page.setObjectName("lineEdit_start_page")
         self.horizontalLayout_6.addWidget(self.lineEdit_start_page)
         self.gridLayout.addLayout(self.horizontalLayout_6, 2, 0, 1, 1)
@@ -126,7 +132,8 @@ class Ui_MainWindow(QMainWindow):
         self.label_page_num.setObjectName("label_page_num")
         self.horizontalLayout_4.addWidget(self.label_page_num)
         self.lineEdit_page_num = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_page_num.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.lineEdit_page_num.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.lineEdit_page_num.setObjectName("lineEdit_page_num")
         self.horizontalLayout_4.addWidget(self.lineEdit_page_num)
         self.gridLayout.addLayout(self.horizontalLayout_4, 4, 0, 1, 1)
@@ -145,21 +152,25 @@ class Ui_MainWindow(QMainWindow):
         self.line_5.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_5.setObjectName("line_5")
         self.gridLayout.addWidget(self.line_5, 1, 0, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
         self.verticalLayout.addLayout(self.gridLayout)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_8.addItem(spacerItem2)
         self.pushButton_save = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_save.setObjectName("pushButton_save")
         self.pushButton_save.setStyleSheet("background-color:lightblue")
         self.pushButton_save.clicked.connect(self.on_save)
         self.horizontalLayout_8.addWidget(self.pushButton_save)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_8.addItem(spacerItem3)
         self.verticalLayout.addLayout(self.horizontalLayout_8)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -219,7 +230,9 @@ class Ui_MainWindow(QMainWindow):
                     v = '\'' + v + '\''
                 f.write(para + '=' + v + '\n')
         if no_wrong:
-            QtWidgets.QMessageBox.information(self, "提示", "保存成功", QtWidgets.QMessageBox.Yes)
+            QtWidgets.QMessageBox.information(
+                self, "提示", "保存成功", QtWidgets.QMessageBox.Yes)
 
     def signal_call(self, obj):
-        QtWidgets.QMessageBox.critical(self, '错误', obj['msg'], QtWidgets.QMessageBox.Yes)
+        QtWidgets.QMessageBox.critical(
+            self, '错误', obj['msg'], QtWidgets.QMessageBox.Yes)

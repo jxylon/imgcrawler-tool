@@ -36,7 +36,8 @@ class Ui_MainWindow(QWidget):
         self.filter_ui.setupUi(self.filter_ui)
         self.setting_ui = settings_ui.Ui_MainWindow()
         self.setting_ui.setupUi(self.setting_ui)
-        self.lableimg_ui = labelImg.MainWindow(None, '../labelimg/data/predefined_classes.txt', None)
+        self.lableimg_ui = labelImg.MainWindow(
+            None, '../labelimg/data/predefined_classes.txt', None)
         # 信号连接信号槽
         self.signal.connect(self.signal_call)
         self.crawler.signal_msg = self.signal
@@ -56,7 +57,8 @@ class Ui_MainWindow(QWidget):
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -65,13 +67,16 @@ class Ui_MainWindow(QWidget):
         self.label_pattern = QtWidgets.QLabel(self.centralwidget)
         self.label_pattern.setObjectName("label_pattern")
         self.label_pattern.setFont(font2)
-        self.verticalLayout.addWidget(self.label_pattern, 0, QtCore.Qt.AlignHCenter)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 80, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addWidget(
+            self.label_pattern, 0, QtCore.Qt.AlignHCenter)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            20, 80, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
         self.label_website = QtWidgets.QLabel(self.centralwidget)
         self.label_website.setObjectName("label_website")
         self.label_website.setFont(font2)
-        self.verticalLayout.addWidget(self.label_website, 0, QtCore.Qt.AlignHCenter)
+        self.verticalLayout.addWidget(
+            self.label_website, 0, QtCore.Qt.AlignHCenter)
         self.lineEdit_website = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_website.setObjectName("lineEdit_website")
         self.init_website_editor()
@@ -81,11 +86,13 @@ class Ui_MainWindow(QWidget):
         self.label_keyword = QtWidgets.QLabel(self.centralwidget)
         self.label_keyword.setObjectName("label_keyword")
         self.label_keyword.setFont(font2)
-        self.verticalLayout_2.addWidget(self.label_keyword, 0, QtCore.Qt.AlignHCenter)
+        self.verticalLayout_2.addWidget(
+            self.label_keyword, 0, QtCore.Qt.AlignHCenter)
         self.lineEdit_keyword = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_keyword.setObjectName("lineEdit_keyword")
         self.verticalLayout_2.addWidget(self.lineEdit_keyword)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem2)
         self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.progressBar.setProperty("value", 0)
@@ -99,19 +106,22 @@ class Ui_MainWindow(QWidget):
         self.progressBar_2.setVisible(False)
         self.verticalLayout_2.addWidget(self.progressBar)
         self.verticalLayout_2.addWidget(self.progressBar_2)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem3)
         self.pushButton_start = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_start.setObjectName("pushButton_start")
         self.pushButton_start.setStyleSheet("background-color:lightblue")
         self.pushButton_start.clicked.connect(self.start_onclick)
         self.verticalLayout_2.addWidget(self.pushButton_start)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem3)
         self.verticalLayout.addLayout(self.verticalLayout_2)
         self.verticalLayout_3.addLayout(self.verticalLayout)
         self.horizontalLayout.addLayout(self.verticalLayout_3)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem4)
         self.label_tips = QtWidgets.QLabel(self.centralwidget)
         self.label_tips.setObjectName("label_tips")
@@ -119,7 +129,8 @@ class Ui_MainWindow(QWidget):
         self.verticalLayout.addLayout(self.verticalLayout_2)
         self.verticalLayout_3.addLayout(self.verticalLayout)
         self.horizontalLayout.addLayout(self.verticalLayout_3)
-        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem5 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem5)
         self.horizontalLayout.setStretch(0, 1)
         self.horizontalLayout.setStretch(1, 2)
@@ -197,7 +208,8 @@ class Ui_MainWindow(QWidget):
         self.progressBar.setFormat(_translate("MainWindow", "%p%"))
         self.progressBar_2.setFormat(_translate("MainWindow", "%v/%m"))
         self.pushButton_start.setText(_translate("MainWindow", "开始爬取"))
-        self.label_tips.setText(_translate("MainWindow", "存储路径：" + self.root_path))
+        self.label_tips.setText(_translate(
+            "MainWindow", "存储路径：" + self.root_path))
         self.menu_main.setTitle(_translate("MainWindow", "功能"))
         self.menu_function.setTitle(_translate("MainWindow", "模式"))
         self.action_openfile.setText(_translate("MainWindow", "更改存储路径"))
@@ -215,7 +227,8 @@ class Ui_MainWindow(QWidget):
         更改存储路径
 
         """
-        filename = QFileDialog.getExistingDirectory(caption='更改存储路径', directory=self.save_path)
+        filename = QFileDialog.getExistingDirectory(
+            caption='更改存储路径', directory=self.save_path)
         self.isopen = False
         if filename:
             self.save_path = filename + '/'
@@ -224,7 +237,8 @@ class Ui_MainWindow(QWidget):
             self.label_tips.setText("当前存储路径：" + self.save_path)
 
     def get_cur_path(self):
-        filename = QFileDialog.getExistingDirectory(caption='打开文件夹', directory=self.cur_path)
+        filename = QFileDialog.getExistingDirectory(
+            caption='打开文件夹', directory=self.cur_path)
         self.isopen = False
         if filename:
             self.cur_path = filename + '/'
@@ -241,7 +255,8 @@ class Ui_MainWindow(QWidget):
     def init_pattern_label(self):
         _translate = QtCore.QCoreApplication.translate
         pattern_name = ['模式一：爬取百度图片', '模式二：爬取网站所有图片']
-        self.label_pattern.setText(_translate("MainWindow", pattern_name[self.pattern - 1]))
+        self.label_pattern.setText(_translate(
+            "MainWindow", pattern_name[self.pattern - 1]))
 
     def change_pattern(self, idx):
         if idx == 1:
@@ -270,12 +285,13 @@ class Ui_MainWindow(QWidget):
         self.crawler._save_path = self.save_path
         # 停止线程使用
         self.crawler.flag = 1
-        # 用到了时间间隔、爬取页数，所以需要重新加载
+        # 用到了时间间隔和爬取页数，所以需要重新加载
         self.crawler.load_parameter()
         # 设置最大页数
         self.progressBar_2.setMaximum(self.crawler._page_num)
         # 初始化爬虫线程实例
-        self.thread_crawler = Worker_crawler(self.pattern, self.crawler, keyword, website)
+        self.thread_crawler = Worker_crawler(
+            self.pattern, self.crawler, keyword, website)
         # 信号连接信号槽
         self.thread_crawler.progressBarValue.connect(self.on_imgchange)
         self.thread_crawler.progressBarValue2.connect(self.on_pagechange)
@@ -288,15 +304,18 @@ class Ui_MainWindow(QWidget):
         self.progressBar_2.setValue(obj['val'])
         # 爬取成功
         if obj['code'] == 1:
-            QtWidgets.QMessageBox.information(self, "提示", "爬取完毕", QtWidgets.QMessageBox.Yes)
+            QtWidgets.QMessageBox.information(
+                self, "提示", "爬取完毕", QtWidgets.QMessageBox.Yes)
         # 停止线程完毕
         elif obj['code'] == 2:
-            QtWidgets.QMessageBox.information(self, "提示", "停止线程完毕", QtWidgets.QMessageBox.Yes)
+            QtWidgets.QMessageBox.information(
+                self, "提示", "停止线程完毕", QtWidgets.QMessageBox.Yes)
 
     def on_arrangechange(self, obj):
         self.progressBar.setValue(obj['val'])
         if obj['code'] == 1:
-            QtWidgets.QMessageBox.information(self, "提示", "图片重命名完毕", QtWidgets.QMessageBox.Yes)
+            QtWidgets.QMessageBox.information(
+                self, "提示", "图片重命名完毕", QtWidgets.QMessageBox.Yes)
 
     def on_arrange(self):
         self.get_cur_path()
@@ -323,7 +342,8 @@ class Ui_MainWindow(QWidget):
         self.filter_ui.setFixedSize(width, height)
 
     def signal_call(self, obj):
-        QtWidgets.QMessageBox.critical(self, '错误', obj['msg'], QtWidgets.QMessageBox.Yes)
+        QtWidgets.QMessageBox.critical(
+            self, '错误', obj['msg'], QtWidgets.QMessageBox.Yes)
 
 
 class Worker_crawler(QThread):

@@ -34,8 +34,10 @@ class Ui_MainWindow(QMainWindow):
         self.verticalLayout.setObjectName("verticalLayout")
         self.label_img = QtWidgets.QLabel(self.centralwidget)
         self.label_img.setObjectName("label_img")
-        self.verticalLayout.addWidget(self.label_img, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addWidget(
+            self.label_img, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -47,7 +49,8 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_prev.clicked.connect(lambda: self.on_clickitem(-1))
         self.pushButton_prev.setShortcut('A')
         self.pushButton_prev.setFont(font)
-        self.pushButton_prev.setIcon(QIcon(QPixmap(self.root_path + '/resources/icons/prev.png')))
+        self.pushButton_prev.setIcon(
+            QIcon(QPixmap(self.root_path + '/resources/icons/prev.png')))
         self.horizontalLayout.addWidget(self.pushButton_prev)
         self.pushButton_del = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_del.setObjectName("pushButton_del")
@@ -55,14 +58,16 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_del.clicked.connect(self.on_filter)
         self.pushButton_del.setShortcut('S')
         self.pushButton_del.setFont(font)
-        self.pushButton_del.setIcon(QIcon(QPixmap(self.root_path + '/resources/icons/cancel.png')))
+        self.pushButton_del.setIcon(
+            QIcon(QPixmap(self.root_path + '/resources/icons/cancel.png')))
         self.horizontalLayout.addWidget(self.pushButton_del)
         self.pushButton_next = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_next.setObjectName("pushButton_next")
         self.pushButton_next.clicked.connect(lambda: self.on_clickitem(1))
         self.pushButton_next.setShortcut('D')
         self.pushButton_next.setFont(font)
-        self.pushButton_next.setIcon(QIcon(QPixmap(self.root_path + '/resources/icons/next.png')))
+        self.pushButton_next.setIcon(
+            QIcon(QPixmap(self.root_path + '/resources/icons/next.png')))
         self.horizontalLayout.addWidget(self.pushButton_next)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.verticalLayout.setStretch(0, 20)
@@ -71,7 +76,8 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout_2.addLayout(self.verticalLayout)
         self.listview_file = QtWidgets.QListWidget(self.centralwidget)
         self.listview_file.setObjectName("listview_file")
-        self.listview_file.itemDoubleClicked.connect(lambda: self.on_clickitem(0))
+        self.listview_file.itemDoubleClicked.connect(
+            lambda: self.on_clickitem(0))
         self.horizontalLayout_2.addWidget(self.listview_file)
         self.horizontalLayout_2.setStretch(0, 10)
         self.horizontalLayout_2.setStretch(1, 3)
@@ -119,7 +125,8 @@ class Ui_MainWindow(QMainWindow):
         更改存储路径
 
         """
-        filename = QFileDialog.getExistingDirectory(caption='更改存储路径', directory=self.cur_path)
+        filename = QFileDialog.getExistingDirectory(
+            caption='更改存储路径', directory=self.cur_path)
         self.isopen = False
         self.listview_file.clear()
         if filename:
@@ -176,13 +183,15 @@ class Ui_MainWindow(QMainWindow):
     def on_filter(self):
         idx = self.listview_file.currentIndex().row()
         img_path = os.path.join(self.cur_path, self.imglist[idx])
-        ans = QMessageBox.question(self, "确认", "确认删除？", QMessageBox.Yes | QMessageBox.No)
+        ans = QMessageBox.question(
+            self, "确认", "确认删除？", QMessageBox.Yes | QMessageBox.No)
         if ans == QMessageBox.Yes:
             self.listview_file.takeItem(idx)
             self.imglist.pop(idx)
             self.on_clickitem(0)
             try:
-                shutil.move(img_path, os.path.join(self.root_path, 'recyclebin'))
+                shutil.move(img_path, os.path.join(
+                    self.root_path, 'recyclebin'))
             except shutil.Error:
                 os.remove(img_path)
         # 删除完重新加载该目录中的文件，文件太多可能会造成卡顿

@@ -62,17 +62,15 @@ class Crawler:
                 if r.status_code == 200:
                     with open(self._save_path + str(uuid.uuid1()) + '.' + suffix, 'wb') as f:
                         f.write(r.content)
-                        # print('下载图片成功！')
             except Exception as e:
-                # print('下载图片失败！')
                 continue
 
     def start_craw(self, pattern, keyword=None, _url=baidu_url):
         """
         爬虫主函数
-        pattern: 模式1-下载百度图片，模式2-下载任意网页中的所有图片
+        pattern: 模式1-下载百度图片 | 模式2-下载任意网页中的所有图片
         _url: 待下载网页链接
-        keyword: 关键词（仅模式1可用）
+        keyword: 关键词(仅模式1可用)
         start_page: 起始页面
         page_num: 总页数
         """
@@ -144,10 +142,3 @@ class Crawler:
         shutil.rmtree(selected_path + 'tmp' + str(k))
         print('图片重命名：{} - {}'.format(start, start + m - 1))
         self.signal_arrange.emit({'code': 1, 'val': 100})
-
-
-if __name__ == '__main__':
-    crawler = Crawler(save_path='E:/Document/Datasets/dota2/')
-    # crawler.start_craw(1, keyword='快递员')
-    # crawler.start_craw(2, _url='https://www.dota2.com.cn/main.htm')
-    # crawler.arrange_imgname()
