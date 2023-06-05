@@ -83,7 +83,7 @@
 + 如果遇到问题
 
   ```
-  	assert(stringId in self.idToMessage), "Missing string id : " + stringId
+  assert(stringId in self.idToMessage), "Missing string id : " + stringId
   AssertionError: Missing string id : useDefaultLabel
   ```
   
